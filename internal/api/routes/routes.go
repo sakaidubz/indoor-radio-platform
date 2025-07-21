@@ -4,11 +4,24 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sakaidubz/indoor-radio-platform/internal/api/handlers"
+	"github.com/sakaidubz/indoor-radio-platform/internal/api/middleware"
+	"github.com/sakaidubz/indoor-radio-platform/internal/config"
+	"github.com/sakaidubz/indoor-radio-platform/internal/domain/repositories"
+	"github.com/sakaidubz/indoor-radio-platform/internal/domain/services"
 	"gorm.io/gorm"
 )
 
 // SetupRoutes sets up all routes for the application
-func SetupRoutes(router *gin.Engine, db *gorm.DB) {
+func SetupRoutes(router *gin.Engine, db *gorm.DB, cfg *config.Config) {
+	// Add CORS middleware
+	router.Use(middleware.CORS())
+
+	// Initialize services and repositories
+	authService := services.NewAuthService(cfg.JWT.Secret)
+	userRepo := repositories.NewUserRepository(db)
+	authHandler := handlers.NewAuthHandler(userRepo, authService)
+
 	// Health check endpoint
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -20,19 +33,26 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 	// API v1 routes
 	v1 := router.Group("/api/v1")
 	{
-		// Authentication routes
+		// Authentication routes (public)
 		auth := v1.Group("/auth")
 		{
-			auth.POST("/login", func(c *gin.Context) {
-				c.JSON(http.StatusOK, gin.H{"message": "Login endpoint - TODO"})
-			})
-			auth.POST("/register", func(c *gin.Context) {
-				c.JSON(http.StatusOK, gin.H{"message": "Register endpoint - TODO"})
-			})
+			auth.POST("/login", authHandler.Login)
+			auth.POST("/register", authHandler.Register)
+			auth.POST("/logout", authHandler.Logout)
 		}
 
-		// Artists routes
-		artists := v1.Group("/artists")
+		// Protected routes
+		protected := v1.Group("")
+		protected.Use(middleware.AuthMiddleware(authService))
+		{
+			// User profile routes
+			protected.GET("/profile", authHandler.GetProfile)
+			protected.PUT("/profile", authHandler.UpdateProfile)
+			protected.POST("/change-password", authHandler.ChangePassword)
+		}
+
+		// Artists routes (protected)
+		artists := protected.Group("/artists")
 		{
 			artists.GET("", func(c *gin.Context) {
 				c.JSON(http.StatusOK, gin.H{"message": "Get artists - TODO"})
@@ -51,8 +71,8 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			})
 		}
 
-		// Episodes routes
-		episodes := v1.Group("/episodes")
+		// Episodes routes (protected)
+		episodes := protected.Group("/episodes")
 		{
 			episodes.GET("", func(c *gin.Context) {
 				c.JSON(http.StatusOK, gin.H{"message": "Get episodes - TODO"})
@@ -71,8 +91,8 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 			})
 		}
 
-		// Social posts routes
-		social := v1.Group("/social")
+		// Social posts routes (protected)
+		social := protected.Group("/social")
 		{
 			social.GET("/posts", func(c *gin.Context) {
 				c.JSON(http.StatusOK, gin.H{"message": "Get social posts - TODO"})

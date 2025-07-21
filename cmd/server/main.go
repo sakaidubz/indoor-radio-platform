@@ -39,7 +39,7 @@ func main() {
 	router := gin.Default()
 
 	// Setup routes
-	routes.SetupRoutes(router, db)
+	routes.SetupRoutes(router, db, cfg)
 
 	// Start server
 	port := os.Getenv("PORT")
