@@ -5,12 +5,18 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/sakaidubz/indoor-radio-platform/internal/api/routes"
 	"github.com/sakaidubz/indoor-radio-platform/internal/config"
 	"github.com/sakaidubz/indoor-radio-platform/internal/infrastructure/database"
 )
 
 func main() {
+	// Load .env file
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Warning: .env file not found: %v", err)
+	}
+
 	// Load configuration
 	cfg := config.Load()
 
