@@ -67,28 +67,59 @@ git clone https://github.com/sakaidubz/indoor-radio-platform.git
 cd indoor-radio-platform
 ```
 
-2. **依存関係のインストール**
+2. **PostgreSQLのインストール（未インストールの場合）**
+```bash
+# macOS
+brew install postgresql
+brew services start postgresql
+
+# Ubuntu
+sudo apt-get install postgresql postgresql-contrib
+sudo systemctl start postgresql
+```
+
+3. **データベースセットアップ**
+```bash
+# 自動セットアップスクリプトを実行
+./scripts/setup-database.sh
+```
+
+4. **依存関係のインストール**
 ```bash
 # Go dependencies
 go mod tidy
 
-# Frontend dependencies (将来実装)
+# Frontend dependencies
 cd web && npm install
 ```
 
-3. **データベースの準備**
-```bash
-# PostgreSQLデータベースを作成
-createdb indoor_radio_db
-```
-
-4. **アプリケーションの起動**
+5. **アプリケーションの起動**
 ```bash
 # バックエンドサーバーの起動
 go run cmd/server/main.go
 
-# フロントエンド開発サーバーの起動 (将来実装)
+# フロントエンド開発サーバーの起動（別ターミナル）
 cd web && npm run dev
+```
+
+### トラブルシューティング
+
+#### データベース接続エラー
+```
+FATAL: role "indoor_radio" does not exist
+```
+このエラーが出た場合は、データベースセットアップスクリプトを実行してください：
+```bash
+./scripts/setup-database.sh
+```
+
+#### PostgreSQLが起動していない場合
+```bash
+# macOS
+brew services start postgresql
+
+# Ubuntu
+sudo systemctl start postgresql
 ```
 
 ## 📁 プロジェクト構造
