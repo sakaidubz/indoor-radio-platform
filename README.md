@@ -159,6 +159,10 @@ indoor-radio-platform/
 ## 🧪 テスト（Rails / RSpec）
 
 ```bash
+# 依存関係のインストール・DB準備は bin/setup で一括
+bin/setup
+
+# RSpec 実行
 bundle exec rspec
 ```
 
