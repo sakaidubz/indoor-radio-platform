@@ -1,0 +1,13 @@
+h2= @episode.title
+
+ul
+  li strong Artist:  = @episode.artist&.name
+  li strong Status:  = @episode.status
+  li strong Scheduled:  = @episode.scheduled_date
+  li strong SoundCloud:  = @episode.soundcloud_url
+  li strong Artwork:  = @episode.artwork_url
+
+p
+  = link_to 'Edit', edit_episode_path(@episode)
+  |  |
+  = link_to 'Back', episodes_path

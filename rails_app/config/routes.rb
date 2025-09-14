@@ -22,4 +22,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # HTML UI
+  get "/dashboard", to: "dashboard#index", as: :dashboard
+  resources :artists
+  resources :episodes
 end

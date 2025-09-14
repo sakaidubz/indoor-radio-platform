@@ -1,0 +1,21 @@
+h2 Artists
+
+p= link_to 'New Artist', new_artist_path
+
+table
+  thead
+    tr
+      th Name
+      th Genre
+      th Status
+      th Actions
+  tbody
+    - @artists.each do |a|
+      tr
+        td= link_to a.name, artist_path(a)
+        td= a.genre
+        td= a.status
+        td.actions
+          = link_to 'Edit', edit_artist_path(a)
+          = link_to 'Delete', artist_path(a), method: :delete, data: { confirm: 'Delete this artist?' }
+

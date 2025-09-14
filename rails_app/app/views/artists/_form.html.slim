@@ -1,0 +1,19 @@
+/- Simple jQuery example: focus first input
+javascript:
+  $(function(){ $("#artist_name").focus(); });
+
+= form_with model: @artist do |f|
+  - if @artist.errors.any?
+    .errors
+      p= @artist.errors.full_messages.join(', ')
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :genre
+    = f.text_field :genre
+  .field
+    = f.label :status
+    = f.select :status, %w[draft active archived]
+  .actions
+    = f.submit

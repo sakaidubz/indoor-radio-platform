@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render plain: "Indoor Radio Platform (Rails)"
+    redirect_to dashboard_path
   end
 end
-

@@ -1,0 +1,16 @@
+h2= @artist.name
+
+ul
+  li strong Genre:  = @artist.genre
+  li strong Status:  = @artist.status
+  li strong Theme color:  = @artist.theme_color
+  li strong X:  = @artist.x_id
+  li strong Instagram:  = @artist.instagram_id
+  li strong SoundCloud:  = @artist.soundcloud_id
+  li strong Links:  = @artist.other_links
+
+p
+  = link_to 'Edit', edit_artist_path(@artist)
+  |  |
+  = link_to 'Back', artists_path
+
