@@ -6,6 +6,10 @@ gem "rails", "~> 7.1.3"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "sass-rails", "~> 6.0", require: false
+# Standard Rails asset pipeline
+gem "sprockets-rails"
+# jQuery + UJS support (for method: :delete etc.)
+gem "jquery-rails"
 gem "bcrypt", "~> 3.1"
 gem "jwt", "~> 2.8"
 gem "slim-rails"
