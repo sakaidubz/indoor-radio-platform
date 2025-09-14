@@ -32,7 +32,7 @@ h1.page-title.with-emoji
                 span.emoji= status_emoji(e.status)
                 = titleize_status(e.status)
             td.actions
-              = link_to 'Edit', edit_episode_path(e), class: 'btn btn-ghost'
+              = link_to 'Edit', edit_episode_path(e), class: 'btn btn-primary'
               = link_to 'Delete', episode_path(e), method: :delete, data: { confirm: 'Delete this episode?' }, class: 'btn btn-danger'
   - else
     .empty muted No episodes found.
