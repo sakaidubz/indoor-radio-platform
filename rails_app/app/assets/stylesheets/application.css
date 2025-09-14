@@ -1,0 +1,11 @@
+/* Sprockets manifest */
+/* *= require_tree . */
+/* *= require_self */
+
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+a { text-decoration: none; color: #0366d6; }
+a:hover { text-decoration: underline; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #e5e5e5; padding: 8px; text-align: left; }
+th { background: #fafafa; }
+.actions a { margin-right: 8px; }

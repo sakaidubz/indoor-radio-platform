@@ -1,0 +1,27 @@
+javascript:
+  $(function(){ $("#episode_title").focus(); });
+
+= form_with model: @episode do |f|
+  - if @episode.errors.any?
+    .errors
+      p= @episode.errors.full_messages.join(', ')
+  .field
+    = f.label :artist_id
+    = f.collection_select :artist_id, Artist.order(:name), :id, :name, include_blank: true
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :scheduled_date
+    = f.datetime_field :scheduled_date
+  .field
+    = f.label :soundcloud_url
+    = f.url_field :soundcloud_url
+  .field
+    = f.label :artwork_url
+    = f.url_field :artwork_url
+  .field
+    = f.label :status
+    = f.select :status, %w[planning published archived]
+  .actions
+    = f.submit

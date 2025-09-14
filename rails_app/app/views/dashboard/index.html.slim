@@ -1,0 +1,12 @@
+h2 Dashboard
+
+.stats
+  ul
+    li strong Artists:  = @artists_count
+    li strong Episodes:  = @episodes_count
+    li strong Social Posts:  = @posts_count
+
+p
+  | Quick Links:
+  = link_to 'New Artist', new_artist_path, style: 'margin-left:8px;'
+  = link_to 'New Episode', new_episode_path, style: 'margin-left:8px;'

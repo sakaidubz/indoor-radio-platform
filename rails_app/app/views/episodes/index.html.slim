@@ -1,0 +1,20 @@
+h2 Episodes
+
+p= link_to 'New Episode', new_episode_path
+
+table
+  thead
+    tr
+      th Title
+      th Artist
+      th Status
+      th Actions
+  tbody
+    - @episodes.each do |e|
+      tr
+        td= link_to e.title, episode_path(e)
+        td= e.artist&.name
+        td= e.status
+        td.actions
+          = link_to 'Edit', edit_episode_path(e)
+          = link_to 'Delete', episode_path(e), method: :delete, data: { confirm: 'Delete this episode?' }
