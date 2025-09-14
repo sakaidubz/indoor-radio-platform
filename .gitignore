@@ -122,3 +122,15 @@ tmp/
 
 # Docker
 .dockerignore
+\n# Rails app ignores (migrated from rails_app/.gitignore)
+# Rails-specific ignores
+/log/*
+/tmp/*
+/storage/*
+!/log/.keep
+!/tmp/.keep
+!/storage/.keep
+/vendor/bundle/
+/.bundle/
+/node_modules/
+

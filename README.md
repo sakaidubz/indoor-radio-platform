@@ -8,16 +8,10 @@
 
 ## 🛠 技術スタック
 
-### バックエンド
-- **Go** 1.22+
-- **Gin** - HTTP Web Framework
-- **GORM** - ORM
-- **PostgreSQL** - データベース
-
-### フロントエンド
-- **Vue.js 3** - フロントエンドフレームワーク
-- **Tailwind CSS** - CSSフレームワーク
-- **Pinia** - 状態管理
+- **Ruby on Rails 7**（モノリス）
+- **PostgreSQL**
+- **Slim**（テンプレート）+ **jQuery**（最小限のUI補助）
+- **Puma**（アプリケーションサーバ）
 
 ### インフラ
 - **AWS EC2** - アプリケーションサーバー
@@ -27,14 +21,12 @@
 ## 🚀 クイックスタート
 
 ### 前提条件
-- Go 1.22+
-- Node.js 18+
+- Ruby 3.2+
 - PostgreSQL 15+
-- Docker (オプション)
 
 ### 環境変数設定
 
-`.env` ファイルを作成し、以下の環境変数を設定してください：
+`.env` ファイルを作成（または `scripts/setup-rails-postgres.sh` で自動生成）し、以下の環境変数を設定してください：
 
 ```bash
 # Database
@@ -59,47 +51,27 @@ INSTAGRAM_ACCESS_TOKEN=your_instagram_token
 SOUNDCLOUD_CLIENT_ID=your_soundcloud_client_id
 ```
 
-### ローカル開発
+### ローカル開発（Rails）
 
-1. **リポジトリのクローン**
+1. リポジトリ取得
 ```bash
 git clone https://github.com/sakaidubz/indoor-radio-platform.git
 cd indoor-radio-platform
 ```
 
-2. **PostgreSQLのインストール（未インストールの場合）**
+2. Postgres と .env の準備
 ```bash
-# macOS
-brew install postgresql
-brew services start postgresql
-
-# Ubuntu
-sudo apt-get install postgresql postgresql-contrib
-sudo systemctl start postgresql
+# Postgres が未準備ならスクリプトで作成
+bash scripts/setup-rails-postgres.sh
 ```
 
-3. **データベースセットアップ**
+3. Rails セットアップと起動
 ```bash
-# 自動セットアップスクリプトを実行
-./scripts/setup-database.sh
-```
-
-4. **依存関係のインストール**
-```bash
-# Go dependencies
-go mod tidy
-
-# Frontend dependencies
-cd web && npm install
-```
-
-5. **アプリケーションの起動**
-```bash
-# バックエンドサーバーの起動
-go run cmd/server/main.go
-
-# フロントエンド開発サーバーの起動（別ターミナル）
-cd web && npm run dev
+cd rails_app
+bundle install
+bin/rails db:create db:migrate
+bin/rails server
+# http://localhost:3000 （/dashboard, /artists, /episodes）
 ```
 
 ### トラブルシューティング
@@ -110,7 +82,7 @@ FATAL: role "indoor_radio" does not exist
 ```
 このエラーが出た場合は、データベースセットアップスクリプトを実行してください：
 ```bash
-./scripts/setup-database.sh
+./scripts/setup-rails-postgres.sh
 ```
 
 #### PostgreSQLが起動していない場合
@@ -122,31 +94,19 @@ brew services start postgresql
 sudo systemctl start postgresql
 ```
 
-## 📁 プロジェクト構造
+## 📁 プロジェクト構造（Rails）
 
 ```
 indoor-radio-platform/
-├── cmd/
-│   └── server/              # アプリケーションエントリーポイント
-├── internal/
-│   ├── api/                 # HTTP API層
-│   │   ├── handlers/        # HTTPハンドラー
-│   │   ├── middleware/      # ミドルウェア
-│   │   └── routes/          # ルーティング
-│   ├── domain/              # ドメイン層
-│   │   ├── entities/        # エンティティ
-│   │   ├── repositories/    # リポジトリインターフェース
-│   │   └── services/        # ビジネスロジック
-│   ├── infrastructure/      # インフラ層
-│   │   ├── database/        # データベース
-│   │   ├── external/        # 外部API
-│   │   └── storage/         # ファイルストレージ
-│   └── config/              # 設定管理
-├── web/                     # フロントエンド
-├── deployments/             # デプロイ設定
+├── rails_app/               # Railsモノリス本体
+│   ├── app/                 # MVC, assets (Slim/jQuery)
+│   ├── config/              # ルーティング・DB設定
+│   ├── db/                  # マイグレーション
+│   └── spec/                # RSpec（後述）
+├── scripts/
+│   └── setup-rails-postgres.sh  # Postgresと.envの初期化
 ├── docs/                    # ドキュメント
-├── memory-bank/             # プロジェクト管理ドキュメント
-└── scripts/                 # ビルド・デプロイスクリプト
+└── memory-bank/             # プロジェクトメモ
 ```
 
 ## 🎯 主要機能
@@ -158,10 +118,7 @@ indoor-radio-platform/
 - [x] 基本的なAPI構造
 
 ### 🔄 開発中
-- [ ] ユーザー認証システム
-- [ ] アーティスト管理機能
-- [ ] エピソード管理機能
-- [ ] SNS投稿管理機能
+- [ ] Rails上での機能拡充（認証/管理UI）
 
 ### ⏳ 予定
 - [ ] アートワーク自動生成
@@ -194,14 +151,11 @@ indoor-radio-platform/
 - `POST /api/v1/social/posts` - 投稿作成
 - `POST /api/v1/social/posts/:id/schedule` - 投稿スケジュール
 
-## 🧪 テスト
+## 🧪 テスト（Rails / RSpec）
 
 ```bash
-# 全テスト実行
-go test ./...
-
-# カバレッジ付きテスト実行
-go test -cover ./...
+cd rails_app
+bundle exec rspec
 ```
 
 ## 📊 開発進捗
