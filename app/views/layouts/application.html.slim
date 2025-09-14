@@ -8,7 +8,8 @@ html
     = csp_meta_tag
     = stylesheet_link_tag "application", media: "all"
     = javascript_include_tag "application"
-  body
+  - body_classes = [controller_name, action_name].join(' ')
+  body class=body_classes
     nav.navbar
       .nav-inner
         .brand
