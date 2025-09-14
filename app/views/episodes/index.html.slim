@@ -15,13 +15,18 @@ h1.page-title.with-emoji
     - if @episodes.any?
       span.badge= @episodes.size
   - if @episodes.any?
-    table
+    table.table-fixed
+      colgroup
+        col style="width:50%"
+        col style="width:25%"
+        col style="width:15%"
+        col style="width:10%"
       thead
         tr
           th Title
           th Artist
           th Status
-          th Actions
+          th.actions Actions
       tbody
         - @episodes.each do |e|
           tr
