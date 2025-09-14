@@ -1,19 +1,22 @@
-/- Simple jQuery example: focus first input
-javascript:
-  $(function(){ $("#artist_name").focus(); });
+.form-card
+  /- Simple jQuery example: focus first input
+  javascript:
+    $(function(){ $("#artist_name").focus(); });
 
-= form_with model: @artist do |f|
-  - if @artist.errors.any?
-    .errors
-      p= @artist.errors.full_messages.join(', ')
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :genre
-    = f.text_field :genre
-  .field
-    = f.label :status
-    = f.select :status, %w[draft active archived]
-  .actions
-    = f.submit
+  = form_with model: @artist, class: 'form' do |f|
+    - if @artist.errors.any?
+      .errors
+        p= @artist.errors.full_messages.join(', ')
+    .form-grid
+      .field
+        = f.label :name
+        = f.text_field :name, class: 'input', placeholder: 'e.g. DJ Sunrise'
+      .field
+        = f.label :genre
+        = f.text_field :genre, class: 'input', placeholder: 'e.g. House, Ambient'
+      .field
+        = f.label :status
+        = f.select :status, %w[draft active archived], {}, class: 'select'
+    .form-actions
+      = f.submit (@artist.persisted? ? 'Update Artist' : 'Create Artist'), class: 'btn btn-primary'
+      = link_to 'Cancel', (@artist.persisted? ? artist_path(@artist) : artists_path), class: 'btn btn-ghost'

@@ -1,27 +1,30 @@
-javascript:
-  $(function(){ $("#episode_title").focus(); });
+.form-card
+  javascript:
+    $(function(){ $("#episode_title").focus(); });
 
-= form_with model: @episode do |f|
-  - if @episode.errors.any?
-    .errors
-      p= @episode.errors.full_messages.join(', ')
-  .field
-    = f.label :artist_id
-    = f.collection_select :artist_id, Artist.order(:name), :id, :name, include_blank: true
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :scheduled_date
-    = f.datetime_field :scheduled_date
-  .field
-    = f.label :soundcloud_url
-    = f.url_field :soundcloud_url
-  .field
-    = f.label :artwork_url
-    = f.url_field :artwork_url
-  .field
-    = f.label :status
-    = f.select :status, %w[planning published archived]
-  .actions
-    = f.submit
+  = form_with model: @episode, class: 'form' do |f|
+    - if @episode.errors.any?
+      .errors
+        p= @episode.errors.full_messages.join(', ')
+    .form-grid
+      .field
+        = f.label :artist_id, 'Artist'
+        = f.collection_select :artist_id, Artist.order(:name), :id, :name, { include_blank: true }, class: 'select'
+      .field
+        = f.label :title
+        = f.text_field :title, class: 'input', placeholder: 'Episode title'
+      .field
+        = f.label :scheduled_date
+        = f.datetime_field :scheduled_date, class: 'input'
+      .field
+        = f.label :soundcloud_url
+        = f.url_field :soundcloud_url, class: 'input', placeholder: 'https://soundcloud.com/...'
+      .field
+        = f.label :artwork_url
+        = f.url_field :artwork_url, class: 'input', placeholder: 'https://.../artwork.png'
+      .field
+        = f.label :status
+        = f.select :status, %w[planning published archived], {}, class: 'select'
+    .form-actions
+      = f.submit (@episode.persisted? ? 'Update Episode' : 'Create Episode'), class: 'btn btn-primary'
+      = link_to 'Cancel', (@episode.persisted? ? episode_path(@episode) : episodes_path), class: 'btn btn-ghost'
