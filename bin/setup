@@ -16,10 +16,9 @@ echo "➡️  Installing gems"
 bundle check || bundle install
 
 echo "➡️  Ensuring Postgres role/DB and .env"
-bash scripts/setup-rails-postgres.sh || true
+bash scripts/setup-rails-postgres.sh
 
 echo "➡️  Preparing database"
 bin/rails db:create db:migrate
 
 echo "✅ Setup complete. Start server with: bin/rails s"
-
