@@ -65,9 +65,8 @@ cd indoor-radio-platform
 bash scripts/setup-rails-postgres.sh
 ```
 
-3. Rails セットアップと起動
+3. Rails セットアップと起動（Rails はリポジトリ直下に配置）
 ```bash
-cd rails_app
 bundle install
 bin/rails db:create db:migrate
 bin/rails server
@@ -98,15 +97,17 @@ sudo systemctl start postgresql
 
 ```
 indoor-radio-platform/
-├── rails_app/               # Railsモノリス本体
-│   ├── app/                 # MVC, assets (Slim/jQuery)
-│   ├── config/              # ルーティング・DB設定
-│   ├── db/                  # マイグレーション
-│   └── spec/                # RSpec（後述）
+├── app/                 # MVC, assets (Slim/jQuery)
+├── bin/                 # Rails 実行スクリプト
+├── config/              # ルーティング・DB設定
+├── db/                  # マイグレーション
+├── log/                 # ログ
+├── storage/             # ActiveStorage 等
+├── tmp/                 # 一時ファイル
 ├── scripts/
 │   └── setup-rails-postgres.sh  # Postgresと.envの初期化
-├── docs/                    # ドキュメント
-└── memory-bank/             # プロジェクトメモ
+├── docs/                # ドキュメント（docs/rails-README.md など）
+└── memory-bank/         # プロジェクトメモ
 ```
 
 ## 🎯 主要機能
@@ -154,7 +155,6 @@ indoor-radio-platform/
 ## 🧪 テスト（Rails / RSpec）
 
 ```bash
-cd rails_app
 bundle exec rspec
 ```
 
