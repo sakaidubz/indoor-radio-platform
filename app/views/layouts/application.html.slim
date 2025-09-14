@@ -13,9 +13,9 @@ html
     nav.navbar
       .nav-inner
         .brand
-          = link_to dashboard_path, class: 'brand-link with-emoji' do
-            span.emoji 🎛️
-            | Indoor Radio
+          = link_to dashboard_path, class: 'brand-link' do
+            = image_tag "INDOOR RADIO.png", alt: "INDOOR RADIO", class: 'brand-logo'
+            span.brand-text INDOOR RADIO
         ul.nav
           li= link_to dashboard_path, class: 'nav-link with-emoji' do
             span.emoji 🏠
