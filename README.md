@@ -1,5 +1,7 @@
 # 🎧 Indoor Radio Platform
 
+![CI](https://github.com/sakaidubz/indoor-radio-platform/actions/workflows/ci.yml/badge.svg?branch=main)
+
 月1回のMix配信プロジェクト「INDOOR RADIO」の運営管理システム
 
 ## 📋 概要
@@ -72,6 +74,8 @@ bin/rails db:create db:migrate
 bin/rails server
 # http://localhost:3000 （/dashboard, /artists, /episodes）
 ```
+
+補足: 詳細なRailsの説明は docs/rails-README.md も参照してください。
 
 ### トラブルシューティング
 
@@ -161,6 +165,14 @@ bundle exec rspec
 ## 📊 開発進捗
 
 現在の進捗状況は [memory-bank/progress.md](memory-bank/progress.md) で確認できます。
+
+## 🔁 CI（GitHub Actions）
+
+main と Pull Request に対し、自動で以下を実行します：
+- Ruby 3.2.2 のセットアップ + bundler cache
+- PostgreSQL サービス起動（test 環境）
+- `rails db:prepare` によるDB初期化
+- 簡易スモークテスト（`rails about`）とテスト実行（テストが存在すれば）
 
 ## 🤝 コントリビューション
 
