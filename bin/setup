@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "➡️  Checking Ruby and Bundler"
+if ! command -v ruby >/dev/null 2>&1; then
+  echo "❌ Ruby is not installed. Please install Ruby 3.2.2 (see .ruby-version)." >&2
+  exit 1
+fi
+
+if ! command -v bundle >/dev/null 2>&1; then
+  echo "❌ Bundler is not installed. Run: gem install bundler" >&2
+  exit 1
+fi
+
+echo "➡️  Installing gems"
+bundle check || bundle install
+
+echo "➡️  Ensuring Postgres role/DB and .env"
+bash scripts/setup-rails-postgres.sh || true
+
+echo "➡️  Preparing database"
+bin/rails db:create db:migrate
+
+echo "✅ Setup complete. Start server with: bin/rails s"
+
