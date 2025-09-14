@@ -33,6 +33,6 @@ h1.page-title.with-emoji
                 = titleize_status(a.status)
             td.actions
               = link_to 'Edit', edit_artist_path(a), class: 'btn btn-ghost'
-              = link_to 'Delete', artist_path(a), method: :delete, data: { confirm: 'Delete this artist?' }, class: 'btn btn-ghost'
+              = link_to 'Delete', artist_path(a), method: :delete, data: { confirm: 'Delete this artist?' }, class: 'btn btn-danger'
   - else
     .empty muted No artists found.
