@@ -1,8 +1,9 @@
 // Sprockets manifest
-//= require rails-ujs
+//= require jquery
+//= require jquery_ujs
 //= require_tree .
 
 $(function(){
   // Simple global handler placeholder
-  console.log('Rails + jQuery UI loaded');
+  console.log('Rails + jQuery loaded');
 });

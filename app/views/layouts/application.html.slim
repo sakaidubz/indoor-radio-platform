@@ -8,9 +8,7 @@ html
     = csp_meta_tag
     / Styles
     = stylesheet_link_tag "application", media: "all"
-    / jQuery (CDN)
-    script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"
-    / JS
+    / JS (served via Rails asset pipeline)
     = javascript_include_tag "application"
   body
     header style="padding:12px;border-bottom:1px solid #ddd;margin-bottom:16px;"
