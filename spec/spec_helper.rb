@@ -1,4 +1,5 @@
-require 'rspec'
+# RSpec core is loaded by the runner; explicit require is unnecessary.
+# In some environments `require 'rspec'` may not resolve; keep config only.
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -17,4 +18,3 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 end
-
