@@ -137,8 +137,17 @@ tbody tr:hover { background: rgba(0,0,0,0.03); }
 
 /* Dashboard-specific background (animated gif) */
 body.dashboard.index {
-  background-image: url('indoor_logo_loop.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* Soften motion/contrast by overlaying a translucent white wash */
+  background-image: linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url('indoor_logo_loop.gif');
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+}
+
+/* Respect users who prefer reduced motion: fall back to static tint */
+@media (prefers-reduced-motion: reduce) {
+  body.dashboard.index {
+    background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('INDOOR RADIO.png');
+  }
 }
