@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: <%= ENV.fetch('DB_HOST', 'localhost') %>
+  port: <%= ENV.fetch('DB_PORT', 5432) %>
+  username: <%= ENV.fetch('DB_USER', 'indoor_radio') %>
+  password: <%= ENV.fetch('DB_PASSWORD', nil) %>
+  database: <%= ENV.fetch('DB_NAME', 'indoor_radio_db') %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: <%= ENV.fetch('DB_NAME_TEST', 'indoor_radio_test') %>
+
+production:
+  <<: *default
+
