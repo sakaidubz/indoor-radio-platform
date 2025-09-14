@@ -49,12 +49,11 @@ else
   echo "⚠️  .env already exists, skipping"
 fi
 
-if [ -d rails_app ]; then
+if [ -x bin/rails ]; then
   echo "→ Rails database tasks (create/migrate)"
-  echo "   Run inside rails_app: bundle install && bin/rails db:create db:migrate"
+  echo "   From repo root: bundle install && bin/rails db:create db:migrate"
 else
-  echo "⚠️  rails_app directory not found; skipping Rails tasks"
+  echo "⚠️  Rails executable (bin/rails) not found; skipping Rails tasks"
 fi
 
 echo "🎉 Done"
-
