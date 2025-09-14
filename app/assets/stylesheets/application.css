@@ -63,6 +63,10 @@ a:hover { text-decoration: underline; }
 .stat-value { font-size: 28px; font-weight: 700; }
 
 .actions-row { display: flex; gap: 8px; margin: 8px 0 20px; }
+.actions-row .btn + .btn { margin-left: 0; }
+
+/* Table action buttons spacing */
+td.actions { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
 .btn { display: inline-block; border-radius: 8px; padding: 8px 12px; background: var(--accent); color: var(--text); border: 1px solid var(--border); text-decoration: none; }
 .btn:hover { filter: brightness(1.08); text-decoration: none; }
 .btn-primary { background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%); border-color: #2563eb; color: #ffffff; }
