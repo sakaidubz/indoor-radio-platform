@@ -1,4 +1,6 @@
-h1.page-title Dashboard
+h1.page-title.with-emoji
+  span.emoji 📊
+  | Dashboard
 
 .stats-grid
   .stat-card
@@ -12,13 +14,19 @@ h1.page-title Dashboard
     .stat-value= @posts_count
 
 .actions-row
-  = link_to 'New Artist', new_artist_path, class: 'btn btn-primary'
-  = link_to 'New Episode', new_episode_path, class: 'btn'
+  = link_to new_artist_path, class: 'btn btn-primary with-emoji' do
+    span.emoji ➕
+    | New Artist
+  = link_to new_episode_path, class: 'btn with-emoji' do
+    span.emoji ➕
+    | New Episode
 
 .grid-2
   .card
     .card-header
-      h3.card-title Upcoming Episodes
+      h3.card-title.with-emoji
+        span.emoji 📅
+        | Upcoming Episodes
       - if @upcoming_episodes.any?
         span.badge= @upcoming_episodes.size
     - if @upcoming_episodes.any?
@@ -36,13 +44,17 @@ h1.page-title Dashboard
               td= link_to ep.artist.name, artist_path(ep.artist)
               td= ep.scheduled_date&.strftime('%Y-%m-%d %H:%M')
               td
-                span.tag= ep.status
+                span.tag.with-emoji
+                  span.emoji= status_emoji(ep.status)
+                  = titleize_status(ep.status)
     - else
       .empty muted No upcoming episodes scheduled.
 
   .card
     .card-header
-      h3.card-title Recent Activity
+      h3.card-title.with-emoji
+        span.emoji 📰
+        | Recent Activity
     .split
       .subcard
         h4.subcard-title Episodes
@@ -72,34 +84,46 @@ h1.page-title Dashboard
           ul.list
             - @recent_posts.each do |sp|
               li
+                span.emoji= platform_emoji(sp.platform)
+                |  
                 = sp.platform
                 span.muted ·
                 = link_to sp.episode.title, episode_path(sp.episode)
                 span.muted ·
-                span.tag= sp.status
+                span.tag.with-emoji
+                  span.emoji= status_emoji(sp.status)
+                  = titleize_status(sp.status)
         - else
           .empty muted No social posts yet.
 
 .grid-2
   .card
     .card-header
-      h3.card-title Episodes by Status
+      h3.card-title.with-emoji
+        span.emoji 🧮
+        | Episodes by Status
     - if @episodes_by_status.present?
       ul.kv
         - @episodes_by_status.each do |status, count|
           li
-            span.k= status
+            span.k.with-emoji
+              span.emoji= status_emoji(status)
+              = titleize_status(status)
             span.v= count
     - else
       .empty muted No data.
   .card
     .card-header
-      h3.card-title Social Posts by Status
+      h3.card-title.with-emoji
+        span.emoji 💬
+        | Social Posts by Status
     - if @posts_by_status.present?
       ul.kv
         - @posts_by_status.each do |status, count|
           li
-            span.k= status
+            span.k.with-emoji
+              span.emoji= status_emoji(status)
+              = titleize_status(status)
             span.v= count
     - else
       .empty muted No data.

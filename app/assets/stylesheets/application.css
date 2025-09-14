@@ -126,3 +126,7 @@ tbody tr:hover { background: rgba(255,255,255,0.02); }
   .form-grid { grid-template-columns: 1fr; }
   .form-row { grid-column: span 1; }
 }
+
+/* Emoji helpers */
+.with-emoji { display: inline-flex; align-items: center; gap: 6px; }
+.emoji { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", emoji, sans-serif; }
