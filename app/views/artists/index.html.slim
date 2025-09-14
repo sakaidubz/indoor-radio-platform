@@ -1,21 +1,38 @@
-h2 Artists
+h1.page-title.with-emoji
+  span.emoji 🎵
+  | Artists
 
-p= link_to 'New Artist', new_artist_path
+.actions-row
+  = link_to new_artist_path, class: 'btn btn-primary with-emoji' do
+    span.emoji ➕
+    | New Artist
 
-table
-  thead
-    tr
-      th Name
-      th Genre
-      th Status
-      th Actions
-  tbody
-    - @artists.each do |a|
-      tr
-        td= link_to a.name, artist_path(a)
-        td= a.genre
-        td= a.status
-        td.actions
-          = link_to 'Edit', edit_artist_path(a)
-          = link_to 'Delete', artist_path(a), method: :delete, data: { confirm: 'Delete this artist?' }
-
+.card
+  .card-header
+    h3.card-title.with-emoji
+      span.emoji 🎵
+      | All Artists
+    - if @artists.any?
+      span.badge= @artists.size
+  - if @artists.any?
+    table
+      thead
+        tr
+          th Name
+          th Genre
+          th Status
+          th Actions
+      tbody
+        - @artists.each do |a|
+          tr
+            td= link_to a.name, artist_path(a)
+            td= a.genre.presence || '-'
+            td
+              span.tag.with-emoji
+                span.emoji= status_emoji(a.status)
+                = titleize_status(a.status)
+            td.actions
+              = link_to 'Edit', edit_artist_path(a), class: 'btn btn-ghost'
+              = link_to 'Delete', artist_path(a), method: :delete, data: { confirm: 'Delete this artist?' }, class: 'btn btn-ghost'
+  - else
+    .empty muted No artists found.

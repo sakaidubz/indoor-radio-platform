@@ -1,16 +1,36 @@
-h2= @artist.name
+h1.page-title.with-emoji
+  span.emoji 🎵
+  = @artist.name
 
-ul
-  li strong Genre:  = @artist.genre
-  li strong Status:  = @artist.status
-  li strong Theme color:  = @artist.theme_color
-  li strong X:  = @artist.x_id
-  li strong Instagram:  = @artist.instagram_id
-  li strong SoundCloud:  = @artist.soundcloud_id
-  li strong Links:  = @artist.other_links
+.actions-row
+  = link_to 'Edit', edit_artist_path(@artist), class: 'btn'
+  = link_to 'Back', artists_path, class: 'btn btn-ghost'
 
-p
-  = link_to 'Edit', edit_artist_path(@artist)
-  |  |
-  = link_to 'Back', artists_path
-
+.card
+  .card-header
+    h3.card-title.with-emoji
+      span.emoji 🧾
+      | Artist Details
+    span.tag.with-emoji
+      span.emoji= status_emoji(@artist.status)
+      = titleize_status(@artist.status)
+  .subcard
+    .kv
+      li
+        span.k Genre
+        span.v= @artist.genre.presence || '-'
+      li
+        span.k Theme color
+        span.v= @artist.theme_color.presence || '-'
+      li
+        span.k X
+        span.v= @artist.x_id.presence || '-'
+      li
+        span.k Instagram
+        span.v= @artist.instagram_id.presence || '-'
+      li
+        span.k SoundCloud
+        span.v= @artist.soundcloud_id.presence || '-'
+      li
+        span.k Links
+        span.v= @artist.other_links.presence || '-'

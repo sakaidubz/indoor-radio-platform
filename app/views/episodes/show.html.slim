@@ -1,13 +1,30 @@
-h2= @episode.title
+h1.page-title.with-emoji
+  span.emoji 🎙️
+  = @episode.title
 
-ul
-  li strong Artist:  = @episode.artist&.name
-  li strong Status:  = @episode.status
-  li strong Scheduled:  = @episode.scheduled_date
-  li strong SoundCloud:  = @episode.soundcloud_url
-  li strong Artwork:  = @episode.artwork_url
+.actions-row
+  = link_to 'Edit', edit_episode_path(@episode), class: 'btn'
+  = link_to 'Back', episodes_path, class: 'btn btn-ghost'
 
-p
-  = link_to 'Edit', edit_episode_path(@episode)
-  |  |
-  = link_to 'Back', episodes_path
+.card
+  .card-header
+    h3.card-title.with-emoji
+      span.emoji 🧾
+      | Episode Details
+    span.tag.with-emoji
+      span.emoji= status_emoji(@episode.status)
+      = titleize_status(@episode.status)
+  .subcard
+    .kv
+      li
+        span.k Artist
+        span.v= @episode.artist&.name || '-'
+      li
+        span.k Scheduled
+        span.v= @episode.scheduled_date&.strftime('%Y-%m-%d %H:%M') || '-'
+      li
+        span.k SoundCloud
+        span.v= @episode.soundcloud_url.presence || '-'
+      li
+        span.k Artwork
+        span.v= @episode.artwork_url.presence || '-'
