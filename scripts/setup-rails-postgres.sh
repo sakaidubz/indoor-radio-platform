@@ -35,10 +35,12 @@ fi
 
 echo "Ensuring role and database exist ($DB_USER / $DB_NAME)"
 run_psql() {
-  # Prefer connecting as the local postgres system user (no password needed)
-  if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
-    sudo -u postgres psql -v ON_ERROR_STOP=1 postgres "$@"
-    return $?
+  # Try via local postgres system user first (will prompt for sudo password if needed)
+  if command -v sudo >/dev/null 2>&1; then
+    if sudo -u postgres psql -v ON_ERROR_STOP=1 -c '\q' postgres >/dev/null 2>&1; then
+      sudo -u postgres psql -v ON_ERROR_STOP=1 postgres "$@"
+      return $?
+    fi
   fi
   # Fallback: try TCP as postgres user (may require password configured)
   psql -v ON_ERROR_STOP=1 -U postgres -h 127.0.0.1 -p "$DB_PORT" postgres "$@"
@@ -46,7 +48,7 @@ run_psql() {
 
 set +e
 run_psql <<SQL
-DO $$
+DO \$\$
 BEGIN
   IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '$DB_USER') THEN
     CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD' CREATEDB;
@@ -54,7 +56,7 @@ BEGIN
     -- Ensure password and CREATEDB
     EXECUTE format('ALTER USER %I WITH PASSWORD %L CREATEDB', '$DB_USER', '$DB_PASSWORD');
   END IF;
-END$$;
+END\$\$;
 
 SELECT 'CREATE DATABASE $DB_NAME OWNER $DB_USER'
 WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec
