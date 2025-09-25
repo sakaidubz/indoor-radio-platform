@@ -48,3 +48,6 @@
 ## Security & Configuration
 - Do not commit secrets. Use `.env` (see `.env.example`); the app reads env via `internal/config`.
 - Keep local creds minimal privilege; never hardcode tokens or keys.
+
+## Communication
+- Default to Japanese in all assistant communications unless explicitly directed otherwise by the user.
